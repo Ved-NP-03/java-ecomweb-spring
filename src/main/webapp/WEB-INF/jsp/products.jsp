@@ -9,9 +9,9 @@
 </head>
 <body>
     <div class="container">
-        <h1>🛍️ Product List</h1>
+        <h1> Product List</h1>
         <div class="nav-links">
-            <a href="/viewCart" class="btn btn-secondary">🛒 View Cart</a>
+            <a href="/viewCart" class="btn btn-secondary">   View Cart</a>
         </div>
 
         <%

@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <div class="receipt">
-            <h1>📄 Bill Receipt</h1>
+            <h1> Bill Receipt</h1>
             
             <%
                 LocalDateTime now = LocalDateTime.now();
@@ -23,7 +23,7 @@
             
             <div class="receipt-header">
                 <p><strong>E-commerce Store</strong></p>
-                <p>Date: <%= dateTime %></p>
+                <p>Date & Time: <%= dateTime %></p>
                 <p>Receipt #: <%= System.currentTimeMillis() % 100000 %></p>
             </div>
 
@@ -78,7 +78,7 @@
             </div>
 
             <div class="receipt-footer">
-                <p>✅ <strong>Payment Successful</strong></p>
+                <p><strong>Payment Successful</strong></p>
                 <p>Thank you for shopping with us!</p>
             </div>
 

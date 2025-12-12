@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🛒 Your Shopping Cart</h1>
+        <h1> Your Shopping Cart</h1>
 
         <%
             Cart cart = (Cart) session.getAttribute("cart");
