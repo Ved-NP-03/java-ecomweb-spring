@@ -1,0 +1,8 @@
+com\ecom\controller\CartController.class
+com\ecom\EcommerceApplication.class
+com\ecom\controller\CheckoutController.class
+com\ecom\data\ProductData.class
+com\ecom\model\Cart.class
+com\ecom\model\CartItem.class
+com\ecom\controller\ProductController.class
+com\ecom\model\Item.class

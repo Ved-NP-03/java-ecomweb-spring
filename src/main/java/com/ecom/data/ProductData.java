@@ -18,6 +18,7 @@ public class ProductData {
         products.add(new Item(6, "Ruler", 15.0));
         products.add(new Item(7, "Marker", 25.0));
         products.add(new Item(8, "Stapler", 80.0));
+        
     }
 
     public static List<Item> getAllProducts() {

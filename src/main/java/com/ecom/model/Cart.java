@@ -18,6 +18,19 @@ public class Cart {
         }
     }
 
+    public void decreaseQuantity(int id) {
+        CartItem existing = items.get(id);
+        if (existing != null) {
+            int newQty = existing.getQuantity() - 1;
+            if (newQty <= 0) {
+                // If quantity becomes 0 or less, remove item completely
+                items.remove(id);
+            } else {
+                existing.setQuantity(newQty);
+            }
+        }
+    }
+
     public void removeItem(int id) {
         items.remove(id);
     }

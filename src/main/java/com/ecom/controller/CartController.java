@@ -42,6 +42,36 @@ public class CartController {
         return "cart";
     }
 
+    @PostMapping("/increaseQty")
+    public String increaseQty(@RequestParam("id") int id, HttpSession session) {
+        Cart cart = (Cart) session.getAttribute("cart");
+        if (cart != null) {
+            Item item = ProductData.getById(id);
+            if (item != null) {
+                cart.addItem(item, 1); // Add 1 more
+            }
+        }
+        return "redirect:/viewCart";
+    }
+
+    @PostMapping("/decreaseQty")
+    public String decreaseQty(@RequestParam("id") int id, HttpSession session) {
+        Cart cart = (Cart) session.getAttribute("cart");
+        if (cart != null) {
+            cart.decreaseQuantity(id);
+        }
+        return "redirect:/viewCart";
+    }
+
+    @PostMapping("/removeFromCart")
+    public String removeFromCart(@RequestParam("id") int id, HttpSession session) {
+        Cart cart = (Cart) session.getAttribute("cart");
+        if (cart != null) {
+            cart.removeItem(id);
+        }
+        return "redirect:/viewCart";
+    }
+
     @PostMapping("/clearCart")
     public String clearCart(HttpSession session) {
         Cart cart = (Cart) session.getAttribute("cart");

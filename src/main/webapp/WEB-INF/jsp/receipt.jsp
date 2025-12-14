@@ -11,10 +11,17 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="/" class="navbar-brand">
+                🛍️ ShopEasy
+            </a>
+        </div>
+    </nav>
+
     <div class="container">
         <div class="receipt">
-            <h1> Bill Receipt</h1>
-            
             <%
                 LocalDateTime now = LocalDateTime.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -22,24 +29,26 @@
             %>
             
             <div class="receipt-header">
-                <p><strong>E-commerce Store</strong></p>
-                <p>Date & Time: <%= dateTime %></p>
-                <p>Receipt #: <%= System.currentTimeMillis() % 100000 %></p>
+                <h1>📄 Order Receipt</h1>
+                <p><strong>ShopEasy Store</strong></p>
+                <p>Date: <%= dateTime %></p>
+                <p>Order #: SE<%= System.currentTimeMillis() % 100000 %></p>
             </div>
 
             <%
                 Cart cart = (Cart) session.getAttribute("cart");
                 if (cart == null || cart.isEmpty()) {
             %>
-                <p>No items to display.</p>
-                <a href="/products" class="btn btn-primary">Back to Products</a>
+                <div class="empty-cart">
+                    <p>No items to display.</p>
+                    <a href="/products" class="btn btn-primary">Back to Products</a>
+                </div>
             <%
                 } else {
             %>
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Product</th>
                         <th>Price</th>
                         <th>Qty</th>
@@ -52,7 +61,6 @@
                             CartItem ci = entry.getValue();
                     %>
                     <tr>
-                        <td><%= ci.getItem().getId() %></td>
                         <td><%= ci.getItem().getName() %></td>
                         <td>₹<%= String.format("%.2f", ci.getItem().getPrice()) %></td>
                         <td><%= ci.getQuantity() %></td>
@@ -62,7 +70,7 @@
                 </tbody>
             </table>
 
-            <div class="receipt-summary">
+            <div class="cart-summary">
                 <div class="summary-row">
                     <span>Subtotal:</span>
                     <strong>₹<%= String.format("%.2f", cart.getSubtotal()) %></strong>
@@ -72,19 +80,20 @@
                     <strong>₹<%= String.format("%.2f", cart.getGST()) %></strong>
                 </div>
                 <div class="summary-row total">
-                    <span>Total Payable:</span>
+                    <span>Total Paid:</span>
                     <strong>₹<%= String.format("%.2f", cart.getGrandTotal()) %></strong>
                 </div>
             </div>
 
             <div class="receipt-footer">
-                <p><strong>Payment Successful</strong></p>
-                <p>Thank you for shopping with us!</p>
+                <div class="success-icon"></div>
+                <p><strong>Payment Successful!</strong></p>
+                <p>Thank you for shopping   </p>
             </div>
 
             <div class="cart-actions">
                 <a href="/products" class="btn btn-primary">Shop Again</a>
-                <button onclick="window.print()" class="btn btn-secondary">Print Receipt</button>
+                <button onclick="window.print()" class="btn btn-secondary">🖨️ Print Receipt</button>
             </div>
             <%
                 }

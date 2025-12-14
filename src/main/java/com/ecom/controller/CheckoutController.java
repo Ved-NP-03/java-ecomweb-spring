@@ -11,7 +11,7 @@ import com.ecom.model.Cart;
 public class CheckoutController {
 
     @GetMapping("/checkout")
-    public String checkout(HttpSession session) {
+    public   String checkout(HttpSession session) {
         Cart cart = (Cart) session.getAttribute("cart");
         
         if (cart == null || cart.isEmpty()) {
