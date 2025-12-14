@@ -1,0 +1,28 @@
+notepad .gitignore
+```
+
+**Paste this content and save:**
+```
+# Build outputs
+target/
+*.class
+*.jar
+*.war
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
