@@ -40,8 +40,8 @@ public class OrderService {
         for (Map.Entry<Integer, CartItem> entry : cart.getItems().entrySet()) {
             CartItem cartItem = entry.getValue();
             
-            // Check stock
-            Product product = productService.getProductById(cartItem.getItem().getId().longValue())
+            // Check stock - Fixed: cast int to long instead of calling longValue()
+            Product product = productService.getProductById((long) cartItem.getItem().getId())
                     .orElseThrow(() -> new RuntimeException("Product not found"));
             
             if (!productService.isInStock(product.getId(), cartItem.getQuantity())) {
