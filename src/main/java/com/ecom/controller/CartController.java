@@ -2,31 +2,44 @@ package com.ecom.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.ecom.model.Product;
+import com.ecom.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ecom.data.ProductData;
 import com.ecom.model.Cart;
 import com.ecom.model.Item;
 
 @Controller
 public class CartController {
+    
+    @Autowired
+    private ProductService productService;
 
     @PostMapping("/addToCart")
-    public String addToCart(@RequestParam("id") int id,
+    public String addToCart(@RequestParam("id") Long id,
                            @RequestParam("qty") int qty,
                            HttpSession session) {
         
-        Item item = ProductData.getById(id);
-        if (item != null) {
-            Cart cart = (Cart) session.getAttribute("cart");
-            if (cart == null) {
-                cart = new Cart();
-                session.setAttribute("cart", cart);
+        Product product = productService.getProductById(id).orElse(null);
+        if (product != null && product.isActive()) {
+            // Check stock
+            if (product.getStock() >= qty) {
+                Cart cart = (Cart) session.getAttribute("cart");
+                if (cart == null) {
+                    cart = new Cart();
+                    session.setAttribute("cart", cart);
+                }
+                
+                // Convert Product to Item for cart
+                Item item = new Item(product.getId().intValue(), product.getName(), product.getPrice());
+                cart.addItem(item, qty);
+            } else {
+                return "redirect:/viewCart?error=outofstock";
             }
-            cart.addItem(item, qty);
         }
         
         return "redirect:/viewCart";
@@ -46,9 +59,10 @@ public class CartController {
     public String increaseQty(@RequestParam("id") int id, HttpSession session) {
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart != null) {
-            Item item = ProductData.getById(id);
-            if (item != null) {
-                cart.addItem(item, 1); // Add 1 more
+            Product product = productService.getProductById((long) id).orElse(null);
+            if (product != null) {
+                Item item = new Item(product.getId().intValue(), product.getName(), product.getPrice());
+                cart.addItem(item, 1);
             }
         }
         return "redirect:/viewCart";
